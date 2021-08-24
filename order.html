@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MD Pizzeria</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">MD Pizzeria</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Store </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">History </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">About Us </a>
+                </li>
+
+            </ul>
+            <div class="form-inline my-2 my-lg-0">
+                <a href="#" class="btn btn-warning" id="inandout">Login</a>
+                <br>
+                <a href="./register.html" class="btn btn-warning" id="inandout">Register</a>
+
+                <a href="#">
+                    <img id="cart-icon" src="./images/cart.png">
+                </a>
+                <p id="cart-total">2</p>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box-element" id="form-wrapper">
+                <form name="form" action="js/script.js" method="get">
+                    <div id="user-info">
+                        <div class="form-field">
+                            <input required class="form-control" id="name" onblur="formValidate(this.value,this.name)"
+                                type="text" name="name" placeholder="Name..">
+                        </div>
+                        <div class="form-field">
+                            <input required class="form-control" id="email" onblur="formValidate(this.value,this.name)"
+                                type="email" name="email" placeholder="Email..">
+                        </div>
+                        <div class="form-field">
+                            <input required class="form-control" id="phone" onblur="formValidate(this.value,this.name)"
+                                type="text" name="phone" placeholder="Phone..">
+                        </div>
+                    </div>
+
+                    <div id="shipping-info">
+                        <hr>
+                        <p>Shipping Information:</p>
+                        <hr>
+                        <div class="form-field">
+                            <input class="form-control" id="address"
+                                onblur="formValidate(this.value,this.name, this.name)" id="address" type="text"
+                                name="address" placeholder="Address..">
+                        </div>
+                        <div class="form-field">
+                            <input class="form-control" id="city" onblur="formValidate(this.value,this.name)" id="city"
+                                type="text" name="city" placeholder="City..">
+                        </div>
+                        <div class="form-field">
+                            <input class="form-control" id="state" onblur="formValidate(this.value,this.name)"
+                                id="state" type="text" name="state" placeholder="State..">
+                        </div>
+                        <div class="form-field">
+                            <input class="form-control" id="postcode" onblur="formValidate(this.value,this.name)"
+                                id="postcode" type="text" name="postcode" placeholder="Post code..">
+                        </div>
+                    </div>
+
+                    <hr>
+                    <input id="form-button" class="btn btn-success btn-block" type="button" value="Continue">
+                </form>
+            </div>
+
+            <br>
+
+        </div>
+        <div class="col-lg-6">
+
+            <div id="googleMap" style="width:500px;height:380px;"
+                src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div id="paypal-button-container">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="./js/script.js"></script>
+    <!-- Add Google API Key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-R9W1773fR6CkcyEhyP5WhmVlIaUyrms&callback=initMap"
+        async></script>
+    <script>
+        //Khoi tao Map
+        let map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("googleMap"), {
+                center: { lat: 21.04070292566873, lng: 105.78923222743697 },
+                zoom: 8,
+            });
+        }
+    </script>
+
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=ASr8dLSABEX2HsomA0W1FFHiGNUIrovn0M8smdYCZkVfELfyC-lZijbCCX-D-54qhmNd-Il7wr59W5UZ&currency=USD&disable-funding=credit"></script>
+
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+            // Set up the transaction
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '0.01'
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    // Show a success message to the buyer
+                    alert('Success');
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+    </script>
+
+</body>
+
+</html>
